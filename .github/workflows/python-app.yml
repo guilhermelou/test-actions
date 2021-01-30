@@ -4,6 +4,11 @@
 name: Python Linter/Formatter/Tests
 
 on:
+  push:
+    branches:
+    - main
+    - master
+    - next
   pull_request:
 jobs:
   build:
@@ -29,12 +34,16 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Black Check
-      # You may pin to the exact commit or the version.
-      # uses: jpetrucciani/black-check@6ccaad6b470e4f5999d70021474781a53769ed71
-      uses: jpetrucciani/black-check@20.8b1
-      with:
-        # File or directory to run black on
-        path: src
+#      # You may pin to the exact commit or the version.
+#      # uses: jpetrucciani/black-check@6ccaad6b470e4f5999d70021474781a53769ed71
+#      uses: jpetrucciani/black-check@20.8b1
+#      with:
+#        # File or directory to run black on
+#        path: src
+      run: |
+        set -eax
+        black --version
+        black . --check
     - name: Test with pytest
       run: |
         pytest
