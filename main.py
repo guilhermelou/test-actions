@@ -1,4 +1,4 @@
-def wrong_print():
+def wrong_print(b):
     print(b)
 
 
