@@ -4,12 +4,7 @@
 name: Python Linter/Formatter/Tests
 
 on:
-  push:
-    branches:
-    - main
   pull_request:
-    branches:
-    - main
 jobs:
   build:
 
