@@ -3,6 +3,7 @@ def wrong_print():
 
 
 def print_script():
+    print(c)
     print("Hello World")
 
 
