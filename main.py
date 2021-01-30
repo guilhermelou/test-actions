@@ -1,9 +1,8 @@
 def wrong_print():
-    print(a)
+    pass
 
 
 def print_script():
-    print(c)
     print("Hello World")
 
 
