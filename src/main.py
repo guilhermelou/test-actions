@@ -1,5 +1,7 @@
 def wrong_print(a):
     print(a)
+
+
 def print_script():
     print("Hello World")
 
