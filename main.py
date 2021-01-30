@@ -1,5 +1,5 @@
 def wrong_print():
-    pass
+    print(b)
 
 
 def print_script():
