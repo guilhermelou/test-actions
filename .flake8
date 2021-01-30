@@ -9,7 +9,7 @@ ignore = E203, W503, E501
 # F401: Module imported but not used. (Not ignoring this error, use # noqa for specific)
 
 exclude =
-    src/wrong_main.py,
+    wrong_main.py,
     .git,
     .coverage,
     .DS_Store,
