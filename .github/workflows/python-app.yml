@@ -25,7 +25,7 @@ jobs:
         git fetch origin
         echo "FETCHED origin"
         git branch -r
-        NEW_BRANCH ${{ github.event.pull_request.head.sha }}
+        NEW_BRANCH=${{ github.event.pull_request.head.sha }}
         BASE_BRANCH=${{ github.event.pull_request.base.sha }}
         echo $NEW_BRANCH
         echo $BASE_BRANCH
