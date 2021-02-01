@@ -20,13 +20,13 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: |
-        # git fetch origin
-        # git branch -r
+        git fetch origin
+        git branch -r
         AFTER_HASH=${{ github.event.pull_request.head.sha }}
         BEFORE_HASH=${{ github.event.pull_request.base.sha }}
         if [ $AFTER_HASH == "" ]
         then
-            BEFORE_HASH=github.event.push.after
+            AFTER_HASH=github.event.push.after
         fi
         if [ $BEFORE_HASH == "" ]
         then
