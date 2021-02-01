@@ -25,10 +25,12 @@ jobs:
         git fetch origin
         echo "FETCHED origin"
         git branch -r
+        NEW_BRANCH ${{ github.event.pull_request.head.sha }}
         BASE_BRANCH=${{ github.event.pull_request.base.sha }}
+        echo $NEW_BRANCH
         echo $BASE_BRANCH
         echo "COMMAND"
-        echo $(git diff --name-only --diff-filter=b $(git merge-base HEAD $BASE_BRANCH))
-        DIFF=$(git diff --name-only --diff-filter=b $(git merge-base HEAD $BASE_BRANCH))
+        echo $(git diff --name-only --diff-filter=b $(git merge-base $NEW_BRANCH $BASE_BRANCH))
+        DIFF=$(git diff --name-only --diff-filter=b $(git merge-base $NEW_BRANCH $BASE_BRANCH))
         echo "DIFF"
         echo $DIFF
