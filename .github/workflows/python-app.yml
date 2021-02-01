@@ -24,6 +24,11 @@ jobs:
       if: github.event_name == 'pull_request'
       shell: bash
       run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+    - name: Get ADDED_OR_CHANGED_FILES
+      shell: bash
+      run: |
+        ADDED_OR_CHANGED_FILES=$(git diff --name-only --diff-filter=b $(git merge-base HEAD $BRANCH))
+        echo "BRANCH_NAME=$ADDED_OR_CHANGED_FILES" >> $GITHUB_ENV
     - name: Debug
       run: echo ${{ env.BRANCH_NAME }}
     - uses: actions/checkout@v2
@@ -40,8 +45,16 @@ jobs:
       uses: rbialon/flake8-annotations@v1
     - name: Lint with flake8
       run: |
+        # Echo ADDED_OR_CHANGED_FILES
+        echo ${{ env.ADDED_OR_CHANGED_FILES }}
+        # Echo env.BRANCH_NAME
+        echo ${{ env.BRANCH_NAME }}
+        # Echo BRANCH
+        echo $BRANCH
         # Getting only changed/added files
         DIFF=$(git diff --name-only --diff-filter=b $(git merge-base HEAD $BRANCH))
+        #ECHO DIFF
+        echo $DIFF
         # stop the build if there are Python syntax errors or undefined names
         flake8 $DIFF --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
