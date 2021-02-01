@@ -37,3 +37,6 @@ jobs:
         BEFORE_HASH=${{ github.event.pull_request.base.sha }}
         FILES_ADDED_MODIFIED=$(git diff --name-only --diff-filter=b $(git merge-base $AFTER_HASH $BEFORE_HASH))
         echo $FILES_ADDED_MODIFIED
+    - name: ECHO DEPENDENCIES
+      run: |
+        echo $FILES_ADDED_MODIFIED
