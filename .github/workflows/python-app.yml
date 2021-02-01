@@ -48,7 +48,7 @@ jobs:
         set -eax
         black --version
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
-        PYTHON_ADDED_MODIFIED="$(ls ${{ steps.files.outputs.added_modified }} | grep -E '\.py$' || true)"
+        PYTHON_ADDED_MODIFIED="$(ls $ADDED_MODIFIED_FILES | grep -E '\.py$' || true)"
         if [ "$PYTHON_ADDED_MODIFIED" != "" ]
         then
           echo "Running black for $PYTHON_ADDED_MODIFIED"
