@@ -39,7 +39,10 @@ jobs:
     - name: Get ADDED_OR_CHANGED_FILES
       shell: bash
       run: |
+        BRANCH=${{ env.BRANCH_NAME }}
+        echo $BRANCH
         ADDED_OR_CHANGED_FILES=$(git diff --name-only --diff-filter=b $(git merge-base HEAD $BRANCH))
+        echo $ADDED_OR_CHANGED_FILES
         echo "ADDED_OR_CHANGED_FILES=$ADDED_OR_CHANGED_FILES" >> $GITHUB_ENV
     - name: Setup flake8 annotations
       uses: rbialon/flake8-annotations@v1
