@@ -51,7 +51,7 @@ jobs:
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
         set -eax
         black --version
-        black ADDED_MODIFIED_FILES --check
+        black $ADDED_MODIFIED_FILES --check
     - name: Test with pytest
       run: |
         pytest
