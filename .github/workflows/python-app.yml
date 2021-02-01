@@ -33,7 +33,15 @@ jobs:
     - name: Lint with flake8
       run: |
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
+        echo $ADDED_MODIFIED_FILES
+        echo "BEFORE"
         #PYTHON_ADDED_MODIFIED="$(ls '$ADDED_MODIFIED_FILES' | grep -E '\.py$')"
+        echo "1"
+        echo '${{ steps.files.outputs.added_modified }}'
+        echo "2"
+        echo '${{ steps.files.outputs.added_modified }}' | tr ' ' '\n'
+        echo "3"
+        echo '${{ steps.files.outputs.added_modified }}' | tr ' ' '\n' | grep -E '\.py$'
         PYTHON_ADDED_MODIFIED="$(echo '${{ steps.files.outputs.added_modified }}' | tr ' ' '\n' | grep -E '\.py$')"
         echo "PYTHON ADEEEEEEEE"
         echo $PYTHON_ADDED_MODIFIED
