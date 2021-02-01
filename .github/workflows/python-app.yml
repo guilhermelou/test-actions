@@ -34,7 +34,7 @@ jobs:
       shell: bash
       run: |
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
-        PYTHON_ADDED_MODIFIED="$(ls '${{ steps.files.outputs.added_modified }}' | grep -E '\.py$' || true)"
+        PYTHON_ADDED_MODIFIED="$(ls ${{ steps.files.outputs.added_modified }} | grep -E '\.py$' || true)"
         echo $PYTHON_ADDED_MODIFIED
         if [ "$PYTHON_ADDED_MODIFIED" != "" ]
         then
