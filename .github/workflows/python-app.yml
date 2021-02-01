@@ -38,7 +38,7 @@ jobs:
         echo 'ECHOING ADDED'
         echo $ADDED_MODIFIED_FILES
         echo 'LS'
-        sudo PYTHON_ADDED_MODIFIED=ls $ADDED_MODIFIED_FILES | grep -E '\.py$'
+        PYTHON_ADDED_MODIFIED=ls $ADDED_MODIFIED_FILES | grep -E '\.py$'
         echo 'PYTHON mod'
         echo $PYTHON_ADDED_MODIFIED
         if [ $PYTHON_ADDED_MODIFIED != "" ]
