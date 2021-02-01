@@ -48,7 +48,7 @@ jobs:
         fi
     - name: Black Check
       run: |
-        ADDED_MODIFIED_FILES=${{ steps.files.outputs.added_modified }}
+        ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
         set -eax
         black --version
         black ADDED_MODIFIED_FILES --check
