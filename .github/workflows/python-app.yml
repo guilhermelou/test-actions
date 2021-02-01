@@ -34,11 +34,10 @@ jobs:
       shell: bash
       run: |
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
-        PYTHON_ADDED_MODIFIED="$(ls ${{ steps.files.outputs.added_modified }} | grep -E '\.py$' || true)"
-        echo $PYTHON_ADDED_MODIFIED
+        PYTHON_ADDED_MODIFIED="$(ls $ADDED_MODIFIED_FILES | grep -E '\.py$' || true)"
         if [ "$PYTHON_ADDED_MODIFIED" != "" ]
         then
-          echo "Running flake8 for $ADDED_MODIFIED_FILES"
+          echo "Running flake8 for $PYTHON_ADDED_MODIFIED"
           # stop the build if there are Python syntax errors or undefined names
           flake8 $PYTHON_ADDED_MODIFIED --count --select=E9,F63,F7,F82 --show-source --statistics
           # output warnnings
@@ -46,14 +45,14 @@ jobs:
         fi
     - name: Black Check
       run: |
-        ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
         set -eax
         black --version
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
-        if [ "$ADDED_MODIFIED_FILES" != "" ]
+        PYTHON_ADDED_MODIFIED="$(ls ${{ steps.files.outputs.added_modified }} | grep -E '\.py$' || true)"
+        if [ "$PYTHON_ADDED_MODIFIED" != "" ]
         then
-          echo "Running black for $ADDED_MODIFIED_FILES"
-          black $ADDED_MODIFIED_FILES --check
+          echo "Running black for $PYTHON_ADDED_MODIFIED"
+          black $PYTHON_ADDED_MODIFIED --check
         fi
     - name: Test with pytest
       run: |
