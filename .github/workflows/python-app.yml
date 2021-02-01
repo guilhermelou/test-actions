@@ -36,9 +36,12 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
+    - id: files
+      uses: jitterbit/get-changed-files@v1
     - name: Get ADDED_OR_CHANGED_FILES
       shell: bash
       run: |
+        echo 'Changed files ${{ steps.files.outputs.added_modified }}'
         BRANCH=${{ env.BRANCH_NAME }}
         echo $BRANCH
         ADDED_OR_CHANGED_FILES=$(git diff --name-only --diff-filter=b $(git merge-base HEAD origin/yet_another_branch))
