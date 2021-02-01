@@ -33,7 +33,7 @@ jobs:
     - name: Lint with flake8
       run: |
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
-        PYTHON_ADDED_MODIFIED="$(echo $ADDED_MODIFIED_FILES | grep -E '\.py$')"
+        PYTHON_ADDED_MODIFIED="$(ls '$ADDED_MODIFIED_FILES' | grep -E '\.py$')"
         echo $PYTHON_ADDED_MODIFIED
         if [ "$PYTHON_ADDED_MODIFIED" != "" ]
         then
