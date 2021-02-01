@@ -46,6 +46,7 @@ jobs:
     - name: Lint with flake8
       run: |
         # Echo ADDED_OR_CHANGED_FILES
+        echo "HEREEEEEEEEEEEEEE"
         echo ${{ env.ADDED_OR_CHANGED_FILES }}
         # Echo env.BRANCH_NAME
         echo ${{ env.BRANCH_NAME }}
