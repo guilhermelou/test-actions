@@ -18,7 +18,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Install dependencies
+    - name: Gather Added/Modified Files
       run: |
         git fetch origin
         git branch -r
@@ -36,7 +36,7 @@ jobs:
         AFTER_HASH=${{ github.event.pull_request.head.sha }}
         BEFORE_HASH=${{ github.event.pull_request.base.sha }}
         FILES_ADDED_MODIFIED=$(git diff --name-only --diff-filter=b $(git merge-base $AFTER_HASH $BEFORE_HASH))
-        echo $FILES_ADDED_MODIFIED
+        echo "FILES_ADDED_MODIFIED=$FILES_ADDED_MODIFIED" >> $GITHUB_ENV
     - name: ECHO DEPENDENCIES
       run: |
-        echo $FILES_ADDED_MODIFIED
+        echo "${{ env.FILES_ADDED_MODIFIED }}"
