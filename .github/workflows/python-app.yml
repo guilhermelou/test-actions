@@ -33,8 +33,13 @@ jobs:
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
-        ADDED_MODIFIED_FILES=${{ steps.files.outputs.added_modified }}
+        echo 'STARTING'
+        sudo ADDED_MODIFIED_FILES=${{ steps.files.outputs.added_modified }}
+        echo 'ECHOING ADDED'
+        echo $ADDED_MODIFIED_FILES
+        echo 'LS'
         sudo PYTHON_ADDED_MODIFIED=ls $ADDED_MODIFIED_FILES | grep -E '\.py$'
+        echo 'PYTHON mod'
         echo $PYTHON_ADDED_MODIFIED
         if [ $PYTHON_ADDED_MODIFIED != "" ]
         then
