@@ -24,11 +24,6 @@ jobs:
       if: github.event_name == 'pull_request'
       shell: bash
       run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
-    - name: Get ADDED_OR_CHANGED_FILES
-      shell: bash
-      run: |
-        ADDED_OR_CHANGED_FILES=$(git diff --name-only --diff-filter=b $(git merge-base HEAD $BRANCH))
-        echo "BRANCH_NAME=$ADDED_OR_CHANGED_FILES" >> $GITHUB_ENV
     - name: Debug
       run: echo ${{ env.BRANCH_NAME }}
     - uses: actions/checkout@v2
@@ -41,6 +36,11 @@ jobs:
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
         if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
+    - name: Get ADDED_OR_CHANGED_FILES
+      shell: bash
+      run: |
+        ADDED_OR_CHANGED_FILES=$(git diff --name-only --diff-filter=b $(git merge-base HEAD $BRANCH))
+        echo "BRANCH_NAME=$ADDED_OR_CHANGED_FILES" >> $GITHUB_ENV
     - name: Setup flake8 annotations
       uses: rbialon/flake8-annotations@v1
     - name: Lint with flake8
