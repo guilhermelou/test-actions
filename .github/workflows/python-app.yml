@@ -25,4 +25,4 @@ jobs:
         git fetch origin
         echo "FETCHED origin"
         git branch -r
-        echo $(git merge-base HEAD origin/${{ github.event.pull_request.base.ref }})
+        echo $(git merge-base HEAD ${{ github.event.pull_request.base.ref }})
