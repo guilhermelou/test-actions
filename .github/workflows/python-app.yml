@@ -34,7 +34,7 @@ jobs:
       run: |
         # stop the build if there are Python syntax errors or undefined names
         echo 'STARTING'
-        ADDED_MODIFIED_FILES=${{ steps.files.outputs.added_modified }}
+        ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
         echo 'ECHOING ADDED'
         echo $ADDED_MODIFIED_FILES
         echo 'LS'
