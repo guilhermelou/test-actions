@@ -1,0 +1,60 @@
+# This workflow will install Python dependencies, run tests and lint with a single version of Python
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
+
+name: Python Linter/Style Checker
+
+on:
+  push:
+    branches:
+    - master
+    - main
+    - next
+  pull_request:
+jobs:
+  build:
+    if: github.event.pull_request.draft == false
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.7
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.7
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
+    - id: files
+      uses: jitterbit/get-changed-files@v1
+    - name: Setup flake8 annotations
+      uses: rbialon/flake8-annotations@v1
+    - name: Lint with flake8
+      shell: bash
+      run: |
+        ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
+        PYTHON_ADDED_MODIFIED="$(ls $ADDED_MODIFIED_FILES | grep -E '\.py$' || true)"
+        if [ "$PYTHON_ADDED_MODIFIED" != "" ]
+        then
+          echo "Running flake8 for $PYTHON_ADDED_MODIFIED"
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 $PYTHON_ADDED_MODIFIED --count --select=E9,F63,F7,F82 --show-source --statistics
+          # output warnnings
+          flake8 $PYTHON_ADDED_MODIFIED --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+        fi
+    - name: Black Check
+      run: |
+        set -eax
+        black --version
+        ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
+        PYTHON_ADDED_MODIFIED="$(ls $ADDED_MODIFIED_FILES | grep -E '\.py$' || true)"
+        if [ "$PYTHON_ADDED_MODIFIED" != "" ]
+        then
+          echo "Running black for $PYTHON_ADDED_MODIFIED"
+          black $PYTHON_ADDED_MODIFIED --check
+        fi
+    - name: Test with pytest
+      run: |
+        pytest

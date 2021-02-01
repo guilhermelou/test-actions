@@ -1,3 +1,5 @@
+def wrong_print(a):
+    print(a)
 
 
 def print_script():
@@ -6,4 +8,3 @@ def print_script():
 
 if __name__ == "__main__":
     print_script()
-
