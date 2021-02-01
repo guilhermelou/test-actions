@@ -16,16 +16,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#    - name: Get branch name (merge)
-#      if: github.event_name != 'pull_request'
-#      shell: bash
-#      run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
-    - name: Get branch name (pull request)
-#      if: github.event_name == 'pull_request'
-      shell: bash
-      run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
-    - name: Debug
-      run: echo ${{ env.BRANCH_NAME }}
     - uses: actions/checkout@v2
     - name: Set up Python 3.7
       uses: actions/setup-python@v2
@@ -38,30 +28,10 @@ jobs:
         if [ -f requirements-test.txt ]; then pip install -r requirements-test.txt; fi
     - id: files
       uses: jitterbit/get-changed-files@v1
-#    - name: Get ADDED_OR_CHANGED_FILES
-#      shell: bash
-#      run: |
-#        echo 'Changed files ${{ steps.files.outputs.added_modified }}'
-#        BRANCH=${{ env.BRANCH_NAME }}
-#        echo $BRANCH
-#        ADDED_OR_CHANGED_FILES=$(git diff --name-only --diff-filter=b $(git merge-base HEAD origin/yet_another_branch))
-#        echo $ADDED_OR_CHANGED_FILES
-#        echo "ADDED_OR_CHANGED_FILES=$ADDED_OR_CHANGED_FILES" >> $GITHUB_ENV
     - name: Setup flake8 annotations
       uses: rbialon/flake8-annotations@v1
     - name: Lint with flake8
       run: |
-#        # Echo ADDED_OR_CHANGED_FILES
-#        echo "HEREEEEEEEEEEEEEE"
-#        echo ${{ env.ADDED_OR_CHANGED_FILES }}
-#        # Echo env.BRANCH_NAME
-#        echo ${{ env.BRANCH_NAME }}
-#        # Echo BRANCH
-#        echo $BRANCH
-#        # Getting only changed/added files
-#        DIFF=$(git diff --name-only --diff-filter=b $(git merge-base HEAD $BRANCH))
-#        #ECHO DIFF
-#        echo $DIFF
         # stop the build if there are Python syntax errors or undefined names
         ADDED_MODIFIED_FILES=${{ steps.files.outputs.added_modified }}
         flake8 $ADDED_MODIFIED_FILES --count --select=E9,F63,F7,F82 --show-source --statistics
