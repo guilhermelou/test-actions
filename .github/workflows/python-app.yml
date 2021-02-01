@@ -33,7 +33,7 @@ jobs:
     - name: Lint with flake8
       run: |
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
-        if [ $ADDED_MODIFIED_FILES != "" ]
+        if [ "$ADDED_MODIFIED_FILES" != "" ]
         then
           echo "Running flake8 for $ADDED_MODIFIED_FILES"
           # stop the build if there are Python syntax errors or undefined names
@@ -47,7 +47,7 @@ jobs:
         set -eax
         black --version
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
-        if [ $ADDED_MODIFIED_FILES != "" ]
+        if [ "$ADDED_MODIFIED_FILES" != "" ]
         then
           echo "Running black for $ADDED_MODIFIED_FILES"
           black $ADDED_MODIFIED_FILES --check
