@@ -37,7 +37,10 @@ jobs:
         BEFORE_HASH=${{ github.event.pull_request.base.sha }}
         FILES_ADDED_MODIFIED=$(git diff --name-only --diff-filter=b $(git merge-base $AFTER_HASH $BEFORE_HASH))
         echo $FILES_ADDED_MODIFIED
-        echo "FILES_ADDED_MODIFIED='.github/workflows/python-app.yml abc.txt'" >> $GITHUB_ENV
+        cmd="FILES_ADDED_MODIFIED=$FILES_ADDED_MODIFIED"
+        echo $cmd
+        echo "FILES_ADDED_MODIFIED='.github/workflows/python-app.yml abc.txt'"
+        echo $cmd >> $GITHUB_ENV
     - name: ECHO DEPENDENCIES
       run: |
         echo "${{ env.FILES_ADDED_MODIFIED }}"
