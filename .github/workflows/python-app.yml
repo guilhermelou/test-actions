@@ -32,18 +32,13 @@ jobs:
       uses: rbialon/flake8-annotations@v1
     - name: Lint with flake8
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        echo 'STARTING'
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
-        echo 'ECHOING ADDED'
-        echo $ADDED_MODIFIED_FILES
-        echo 'LS'
-        #PYTHON_ADDED_MODIFIED="$(ls $ADDED_MODIFIED_FILES | grep -E '\.py$')"
-        echo 'PYTHON mod'
-        echo $ADDED_MODIFIED_FILES
         if [ $ADDED_MODIFIED_FILES != "" ]
         then
+          echo "Running flake8 for $ADDED_MODIFIED_FILES"
+          # stop the build if there are Python syntax errors or undefined names
           flake8 $ADDED_MODIFIED_FILES --count --select=E9,F63,F7,F82 --show-source --statistics
+          # output warnnings
           flake8 $ADDED_MODIFIED_FILES --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
         fi
     - name: Black Check
@@ -51,7 +46,12 @@ jobs:
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
         set -eax
         black --version
-        black $ADDED_MODIFIED_FILES --check
+        ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
+        if [ $ADDED_MODIFIED_FILES != "" ]
+        then
+          echo "Running black for $ADDED_MODIFIED_FILES"
+          black $ADDED_MODIFIED_FILES --check
+        fi
     - name: Test with pytest
       run: |
         pytest
