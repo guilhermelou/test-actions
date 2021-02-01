@@ -22,4 +22,4 @@ jobs:
       run: |
         echo ${{ github.event.pull_request.base.ref }}
         echo ${{ github.event.pull_request.head.ref }}
-        echo $(git merge-base HEAD $BRANCH)
+        echo $(git merge-base HEAD ${{ github.event.pull_request.base.ref }})
