@@ -26,6 +26,9 @@ jobs:
         echo "FETCHED origin"
         git branch -r
         BASE_BRANCH=origin/${{ github.event.pull_request.base.ref }}
+        echo $BASE_BRANCH
+        echo "COMMAND"
         echo $(git diff --name-only --diff-filter=b $(git merge-base HEAD $BASE_BRANCH))
         DIFF=$(git diff --name-only --diff-filter=b $(git merge-base HEAD $BASE_BRANCH))
+        echo "DIFF"
         echo $DIFF
