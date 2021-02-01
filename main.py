@@ -1,5 +1,5 @@
-def wrong_print(a):
-    print(a)
+def wrong_print(b):
+    print(b)
 
 
 def print_script():
