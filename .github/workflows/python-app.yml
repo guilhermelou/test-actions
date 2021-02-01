@@ -41,7 +41,7 @@ jobs:
       run: |
         BRANCH=${{ env.BRANCH_NAME }}
         echo $BRANCH
-        ADDED_OR_CHANGED_FILES=$(git diff --name-only --diff-filter=b $(git merge-base HEAD $BRANCH))
+        ADDED_OR_CHANGED_FILES=$(git diff --name-only --diff-filter=b $(git merge-base HEAD yet_another_branch))
         echo $ADDED_OR_CHANGED_FILES
         echo "ADDED_OR_CHANGED_FILES=$ADDED_OR_CHANGED_FILES" >> $GITHUB_ENV
     - name: Setup flake8 annotations
