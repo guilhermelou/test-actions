@@ -33,13 +33,14 @@ jobs:
     - name: Lint with flake8
       run: |
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
-        if [ "$ADDED_MODIFIED_FILES" != "" ]
+        PYTHON_ADDED_MODIFIED="$(ls $ADDED_MODIFIED_FILES | grep -E '\.py$')"
+        if [ "$PYTHON_ADDED_MODIFIED" != "" ]
         then
           echo "Running flake8 for $ADDED_MODIFIED_FILES"
           # stop the build if there are Python syntax errors or undefined names
-          flake8 $ADDED_MODIFIED_FILES --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 $PYTHON_ADDED_MODIFIED --count --select=E9,F63,F7,F82 --show-source --statistics
           # output warnnings
-          flake8 $ADDED_MODIFIED_FILES --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+          flake8 $PYTHON_ADDED_MODIFIED --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
         fi
     - name: Black Check
       run: |
