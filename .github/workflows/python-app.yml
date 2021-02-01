@@ -31,6 +31,7 @@ jobs:
     - name: Setup flake8 annotations
       uses: rbialon/flake8-annotations@v1
     - name: Lint with flake8
+      shell: bash
       run: |
         ADDED_MODIFIED_FILES='${{ steps.files.outputs.added_modified }}'
         echo $ADDED_MODIFIED_FILES
@@ -41,7 +42,7 @@ jobs:
         echo "2"
         echo '${{ steps.files.outputs.added_modified }}' | tr ' ' '\n'
         echo "3"
-        echo '${{ steps.files.outputs.added_modified }}' | tr ' ' '\n' | grep -E '\.py$'
+        echo '${{ steps.files.outputs.added_modified }}' | tr ' ' '\n' | grep -E '\.py$ || true'
         PYTHON_ADDED_MODIFIED="$(echo '${{ steps.files.outputs.added_modified }}' | tr ' ' '\n' | grep -E '\.py$')"
         echo "PYTHON ADEEEEEEEE"
         echo $PYTHON_ADDED_MODIFIED
